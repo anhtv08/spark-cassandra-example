@@ -1,3 +1,5 @@
+##  Learning and experiment with spark
+
 Prerequisites:
 
 jdk and sbt on machine you're building from, spark and cassandra on some machine(s)
