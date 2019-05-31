@@ -9,11 +9,16 @@ import com.datastax.spark.connector._
 object HelloWorldExample {
   def main(args: Array[String]): Unit = {
     // only setting app name, all other properties will be specified at runtime for flexibility
-    val conf = new SparkConf().setAppName("cassandra-example-hello")
+    val conf = new SparkConf()
+      .setAppName("cassandra-example-hello")
+      .set("spark.master", "local")
+
+
 
     val sc = new SparkContext(conf)
 
-    val hello = sc.cassandraTable[(String, String)]("test", "hello")
+
+    val hello = sc.cassandraTable("test","kv")
 
     val first = hello.first
 
