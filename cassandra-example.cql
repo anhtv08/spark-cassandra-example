@@ -27,3 +27,10 @@ CREATE TABLE IF NOT EXISTS stores (
   manager TEXT,
   PRIMARY KEY (city, store)
 );
+
+CREATE TABLE IF NOT EXISTS test.kv(key text PRIMARY KEY, value int);
+
+INSERT INTO test.kv(key, value) VALUES ('key1', 1);
+INSERT INTO test.kv(key, value) VALUES ('key2', 2);
+
+
