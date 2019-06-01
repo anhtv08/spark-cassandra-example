@@ -4,9 +4,13 @@ SPARK_HOME_DIR=$HOME/working/spark/spark-2.4.3-bin-hadoop2.7
 WORKING_DIR=$HOME/working/java/sourcecode/spark-cassandra-example
 CONF_FILE=$WORKING_DIR/cassandra-example.conf
 MAIN_JOB_CLASS=org.examples.datasets.FlightDataProcessor
-JAR_FILE=$WORKING_DIR/target/spark-cassandra-samples-1.0-SNAPSHOT-jar-with-dependencies.jar
+JAR_FILE=spark-cassandra-samples-1.0-SNAPSHOT.jar
 APP_NAME="Spark test job"
 MASTER_URL="local[1]"
+
+# copy driver program to spark jars
+
+cp $WORKING_DIR/target/$JAR_FILE $SPARK_HOME_DIR/jars/
 
 $SPARK_HOME_DIR/bin/spark-submit \
 --properties-file $CONF_FILE \
@@ -14,7 +18,8 @@ $SPARK_HOME_DIR/bin/spark-submit \
 --name $APP_NAME \
 --master $MASTER_URL \
 --deploy-mode client \
-$JAR_FILE
+$JAR_FILE --verbose
+
 
 ret_code=$?
 

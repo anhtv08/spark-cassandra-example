@@ -24,6 +24,7 @@
         <junit.version>4.11</junit.version>
         <scalacheck.version>1.11.4</scalacheck.version>
         <scalatest.version>3.0.6</scalatest.version>
+        <maven.jar.version>3.1.2</maven.jar.version>
     </properties>
 
     <build>
@@ -76,6 +77,20 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.version}</version>
+                <configuration>
+                    <archive>
+<!--                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>-->
+                        <manifest>
+                            <mainClass>org.examples.datasets.FlightDataProcessor</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -87,7 +102,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.koeninger.HelloWorldExample</mainClass>
+                            <mainClass>org.examples.datasets.FlightDataProcessor</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -109,13 +124,26 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.11</artifactId>
             <version>${spark-core_2.11.version}</version>
+            <exclusions>
+               <!-- <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+-->
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+
+            </exclusions>
+<!--            <scope>provided</scope>-->
         </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_2.11</artifactId>
             <version>${spark-core_2.11.version}</version>
-
+<!--            <scope>provided</scope>-->
         </dependency>
 
         <!-- Other component spark streaming, spark graph , spark ML ...-->
