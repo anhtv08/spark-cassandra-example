@@ -1,9 +1,6 @@
 package org.koeninger
-
-import org.apache.spark._
-import org.apache.spark.SparkContext._
-import org.apache.spark.rdd.RDD
 import com.datastax.spark.connector._
+import org.apache.spark._
 
 /** If you know one side of the join is much smaller, it's efficient to broadcast it */
 object BroadcastJoinExample {
@@ -12,24 +9,36 @@ object BroadcastJoinExample {
 
     val sc = new SparkContext(conf)
 
-    val storeToCity = sc.cassandraTable[(String, String)]("test", "stores").
-      select("store", "city").
-      collect.
-      toMap
+//    val storeToCity = sc.cassandraTable("test", "stores").
+//      select("store", "city").
+//      collect
+////      .tom
+////      .toPairRDDFunctions[String,String]
+//      .toMap
 
-    val cityOf = sc.broadcast(storeToCity)
+//    val cityOf = sc.broadcast(storeToCity)
 
-    val visits = sc.cassandraTable[(String, String)]("test", "user_visits").
-      select("store", "user")
+    val visits = sc.cassandraTable("test", "user_visits")
+    val firstRow = visits.first()
+    print(firstRow.columnValues)
 
-    val visitsPerCity = visits.map {
-      case (store, user) => (cityOf.value.apply(store), 1)
-    }.reduceByKey(_ + _)
 
-    val result = visitsPerCity.collect
+
+//    rdd.toArray.foreach(println)
+
+//      select("store", "user")
+//      .
+//      .toEmptyCassandraRDD
+
+
+//    val visitsPerCity = visits.map {
+//      case (store, user) => (cityOf.value.apply(store), 1)
+//    }.reduceByKey(_ + _)
+
+//    val result = visitsPerCity.collect
 
     sc.stop
 
-    result.foreach(println)
+//    result.foreach(println)
   }
 }

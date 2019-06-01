@@ -12,20 +12,21 @@ object JoinExample {
 
     val sc = new SparkContext(conf)
     
-    val visits = sc.cassandraTable[(String, String)]("test", "user_visits").
+    val visits = sc.cassandraTable("test", "user_visits").
       select("store", "user")
 
-    val stores = sc.cassandraTable[(String, String)]("test", "stores").
+    val stores = sc.cassandraTable("test", "stores").
       select("store", "city")
 
-    val visitsPerCity = visits.join(stores).map {
+
+    /*val visitsPerCity = visits.joinWithCassandraTable(stores).map {
       case (store, (user, city)) => (city, 1)
     }.reduceByKey(_ + _)
-
-    val result = visitsPerCity.collect
+*/
+//    val result = visitsPerCity.collect
 
     sc.stop
 
-    result.foreach(println)
+//    result.foreach(println)
   }
 }

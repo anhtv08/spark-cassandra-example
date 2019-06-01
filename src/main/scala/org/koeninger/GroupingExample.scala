@@ -12,7 +12,7 @@ object GroupingExample {
 
     val sc = new SparkContext(conf)
     
-    val visits = sc.cassandraTable[(String)]("test", "user_visits").
+    val visits = sc.cassandraTable("test", "user_visits").
       select("user")
 
     val visitsPerUser = visits.map { user =>
