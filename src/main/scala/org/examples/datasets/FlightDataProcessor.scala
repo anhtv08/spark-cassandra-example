@@ -17,6 +17,7 @@ object FlightDataProcessor {
       .option("inferSchema", "true")
       .load(inflight_data_file)
 
+    flightDS.printSchema()
     import sparkSession.implicits._
     val flights = flightDS.as[Flight]
 
